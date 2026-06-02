@@ -1,0 +1,112 @@
+{% extends 'portfolio_app/base.html' %}
+{% load static %}
+
+{% block title %}Contact Me | Developer Portfolio{% endblock %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container py-4">
+        <!-- Page Title -->
+        <div class="row mb-5 text-center text-md-start animate-fade-in">
+            <div class="col-md-8">
+                <span class="text-uppercase text-secondary fw-bold small tracking-wider">Get in touch</span>
+                <h1 class="fw-bold mt-2">Let's Connect</h1>
+                <p class="text-secondary lead">Have a question or want to work together? Feel free to drop a message!</p>
+            </div>
+        </div>
+
+        <div class="row g-5">
+            <!-- Left Side: Contact Information Cards -->
+            <div class="col-lg-5 animate-fade-in" style="animation-delay: 0.1s;">
+                <div class="row g-4">
+                    <!-- Email Card -->
+                    <div class="col-12">
+                        <div class="glass-panel p-4 d-flex align-items-start gap-4">
+                            <div class="bg-primary bg-opacity-10 p-3 rounded-3 text-primary">
+                                <i class="bi bi-envelope-at-fill" style="font-size: 1.5rem;"></i>
+                            </div>
+                            <div>
+                                <h5 class="fw-bold mb-1">Email Me</h5>
+                                <p class="text-secondary mb-0">anamika.suresh963@gmail.com</p>
+                                <p class="text-muted small">Response within 24 hours</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Location Card -->
+                    <div class="col-12">
+                        <div class="glass-panel p-4 d-flex align-items-start gap-4">
+                            <div class="bg-primary bg-opacity-10 p-3 rounded-3 text-primary">
+                                <i class="bi bi-geo-alt-fill" style="font-size: 1.5rem;"></i>
+                            </div>
+                            <div>
+                                <h5 class="fw-bold mb-1">Location</h5>
+                                <p class="text-secondary mb-0">{% if profile.location %}{{ profile.location }}{% else %}Calicut, India{% endif %}</p>
+                                <p class="text-muted small">Open to remote work worldwide</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Social Channels Card -->
+                    <div class="col-12">
+                        <div class="glass-panel p-4">
+                            <h5 class="fw-bold mb-3"><i class="bi bi-share-fill text-primary me-2"></i>Social Profiles</h5>
+                            <p class="text-secondary mb-4">Connect with me on social platforms where I actively share my tech journey.</p>
+                            <div class="d-flex justify-content-start gap-2">
+                                <a href="https://github.com" target="_blank" class="social-link m-0" aria-label="GitHub">
+                                    <i class="bi bi-github"></i>
+                                </a>
+                                <a href="https://linkedin.com" target="_blank" class="social-link m-0" aria-label="LinkedIn">
+                                    <i class="bi bi-linkedin"></i>
+                                </a>
+                                <a href="https://twitter.com" target="_blank" class="social-link m-0" aria-label="Twitter">
+                                    <i class="bi bi-twitter"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side: Contact Form -->
+            <div class="col-lg-7 animate-fade-in" style="animation-delay: 0.2s;">
+                <div class="glass-panel p-4 p-md-5 h-100">
+                    <h3 class="fw-bold mb-4"><i class="bi bi-chat-dots-fill text-primary me-2"></i>Send a Message</h3>
+                    
+                    <form method="post" id="contact-form" novalidate>
+                        {% csrf_token %}
+                        
+                        <!-- Name Field -->
+                        <div class="mb-4">
+                            <label for="contact-name" class="form-label fw-semibold">Your Name</label>
+                            {{ form.name }}
+                            <div class="form-error-feedback" id="name-error">Please enter a valid name.</div>
+                        </div>
+
+                        <!-- Email Field -->
+                        <div class="mb-4">
+                            <label for="contact-email" class="form-label fw-semibold">Your Email</label>
+                            {{ form.email }}
+                            <div class="form-error-feedback" id="email-error">Please enter a valid email address.</div>
+                        </div>
+
+                        <!-- Message Field -->
+                        <div class="mb-4">
+                            <label for="contact-message" class="form-label fw-semibold">Message</label>
+                            {{ form.message }}
+                            <div class="form-error-feedback" id="message-error">Please enter a message.</div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="d-grid mt-4">
+                            <button type="submit" class="btn btn-primary-custom py-3">
+                                <i class="bi bi-send-fill me-2"></i>Send Message
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

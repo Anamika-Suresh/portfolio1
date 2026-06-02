@@ -1,0 +1,131 @@
+{% extends 'portfolio_app/base.html' %}
+{% load static %}
+
+{% block title %}Home | {{ profile.name }}{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <div class="row align-items-center flex-column-reverse flex-lg-row">
+            <!-- Text Content -->
+            <div class="col-lg-7 text-center text-lg-start mt-4 mt-lg-0 animate-fade-in">
+                <span class="badge bg-primary-custom px-3 py-2 mb-3">Welcome to my space</span>
+                <h1 class="hero-title">Hi, I'm {{ profile.name }}</h1>
+                <p class="hero-subtitle">{{ profile.title }}</p>
+                <p class="lead text-secondary mb-4">
+                    {{ profile.bio }}
+                </p>
+                <div class="d-flex flex-column flex-sm-row justify-content-center justify-content-lg-start gap-3">
+                    <a href="{% url 'projects' %}" class="btn btn-primary-custom">
+                        <i class="bi bi-briefcase me-2"></i>View My Work
+                    </a>
+                    <a href="{% url 'contact' %}" class="btn btn-outline-custom">
+                        <i class="bi bi-chat-text me-2"></i>Get In Touch
+                    </a>
+                </div>
+                
+                {% if profile.location or profile.github_url or profile.linkedin_url %}
+                    <div class="mt-5 pt-3 border-top border-color text-secondary d-flex flex-wrap justify-content-center justify-content-lg-start gap-4">
+                        {% if profile.location %}
+                            <span><i class="bi bi-geo-alt-fill me-2 text-danger"></i>{{ profile.location }}</span>
+                        {% endif %}
+                        {% if profile.github_url %}
+                            <a href="{{ profile.github_url }}" target="_blank" class="text-decoration-none text-secondary hover-accent">
+                                <i class="bi bi-github me-2"></i>GitHub
+                            </a>
+                        {% endif %}
+                        {% if profile.linkedin_url %}
+                            <a href="{{ profile.linkedin_url }}" target="_blank" class="text-decoration-none text-secondary hover-accent">
+                                <i class="bi bi-linkedin me-2"></i>LinkedIn
+                            </a>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            </div>
+            
+            <!-- Image Content -->
+            <div class="col-lg-5 text-center animate-fade-in">
+                <div class="profile-img-container">
+                    {% if profile.profile_image %}
+                        <img src="{{ profile.profile_image.url }}" alt="{{ profile.name }}" class="profile-img img-fluid">
+                    {% else %}
+                        <!-- Inline SVG Placeholder Avatar with beautiful styling -->
+                        <div class="profile-img d-flex align-items-center justify-content-center bg-secondary" style="width: 250px; height: 250px; border-radius: 50%;">
+                            <i class="bi bi-person-fill text-secondary" style="font-size: 8rem; color: var(--accent) !important;"></i>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Projects Section -->
+<section class="py-5 bg-secondary-section" style="background-color: var(--bg-secondary); transition: background-color var(--transition-speed) ease;">
+    <div class="container py-4">
+        <div class="row mb-5 align-items-end">
+            <div class="col-md-8 text-center text-md-start">
+                <span class="text-uppercase text-secondary fw-bold small tracking-wider">Portfolio highlights</span>
+                <h2 class="fw-bold mt-2 mb-0">Featured Projects</h2>
+            </div>
+            <div class="col-md-4 text-center text-md-end mt-3 mt-md-0">
+                <a href="{% url 'projects' %}" class="btn btn-outline-custom">
+                    See All Projects<i class="bi bi-arrow-right ms-2"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            {% if projects %}
+                {% for project in projects %}
+                    <div class="col-md-6 col-lg-4 animate-fade-in">
+                        <div class="card glass-panel project-card border-0">
+                            <div class="project-card-img-wrapper">
+                                {% if project.image %}
+                                    <img src="{{ project.image.url }}" class="project-card-img" alt="{{ project.title }}">
+                                {% else %}
+                                    <!-- Fallback Project SVG -->
+                                    <div class="project-card-img bg-dark d-flex align-items-center justify-content-center">
+                                        <i class="bi bi-laptop text-muted" style="font-size: 4rem;"></i>
+                                    </div>
+                                {% endif %}
+                                <span class="project-category-badge">{{ project.get_category_display }}</span>
+                            </div>
+                            <div class="card-body p-4 d-flex flex-column">
+                                <h5 class="card-title fw-bold">{{ project.title }}</h5>
+                                <p class="card-text text-secondary mb-4">{{ project.description|truncatewords:15 }}</p>
+                                <div class="mt-auto d-flex justify-content-between align-items-center">
+                                    <a href="{% url 'project_detail' project.pk %}" class="btn btn-sm btn-outline-custom py-2 px-3">
+                                        Details
+                                    </a>
+                                    <div class="d-flex gap-2">
+                                        {% if project.github_link %}
+                                            <a href="{{ project.github_link }}" target="_blank" class="btn btn-sm btn-light rounded-circle shadow-sm" aria-label="GitHub Link">
+                                                <i class="bi bi-github"></i>
+                                            </a>
+                                        {% endif %}
+                                        {% if project.live_demo_link %}
+                                            <a href="{{ project.live_demo_link }}" target="_blank" class="btn btn-sm btn-light rounded-circle shadow-sm text-primary" aria-label="Live Demo Link">
+                                                <i class="bi bi-box-arrow-up-right"></i>
+                                            </a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="col-12 text-center py-5">
+                    <div class="glass-panel p-5 d-inline-block">
+                        <i class="bi bi-clipboard-x text-muted" style="font-size: 3rem;"></i>
+                        <h4 class="fw-bold mt-3">No Projects Yet</h4>
+                        <p class="text-secondary mb-0">Check back later or log in to add projects dynamically!</p>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

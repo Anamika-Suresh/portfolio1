@@ -1,0 +1,102 @@
+{% extends 'portfolio_app/base.html' %}
+{% load static %}
+
+{% block title %}My Projects | Developer Portfolio{% endblock %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container py-4">
+        <!-- Page Title -->
+        <div class="row mb-5 text-center text-md-start animate-fade-in">
+            <div class="col-md-8">
+                <span class="text-uppercase text-secondary fw-bold small tracking-wider">My Portfolio</span>
+                <h1 class="fw-bold mt-2">Showcase of My Projects</h1>
+                <p class="text-secondary lead">Explore a curated selection of systems and applications I've designed and built.</p>
+            </div>
+            {% if request.user.is_authenticated %}
+                <div class="col-md-4 text-md-end d-flex align-items-center justify-content-md-end justify-content-center mt-3 mt-md-0">
+                    <a href="{% url 'add_project' %}" class="btn btn-primary-custom">
+                        <i class="bi bi-plus-circle me-2"></i>Add New Project
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Filter pills -->
+        <div class="d-flex flex-wrap justify-content-center justify-content-md-start mb-5 animate-fade-in" style="animation-delay: 0.1s;">
+            <button class="filter-pill active" data-filter="all">All Projects</button>
+            {% for cat in categories_list %}
+                <button class="filter-pill" data-filter="{{ cat.value }}">{{ cat.label }}</button>
+            {% empty %}
+                <!-- Fallback in case no projects exist yet -->
+                <button class="filter-pill" data-filter="Web Dev">Web Development</button>
+                <button class="filter-pill" data-filter="Data Science">Data Science</button>
+                <button class="filter-pill" data-filter="Mobile Apps">Mobile Apps</button>
+            {% endfor %}
+        </div>
+
+        <!-- Projects Grid -->
+        <div class="row g-4 animate-fade-in" style="animation-delay: 0.2s;">
+            {% if request.user.is_authenticated and not projects %}
+                <!-- Admin add reminder card -->
+                <div class="col-md-6 col-lg-4 project-card-col" data-category="all">
+                    <div class="card glass-panel project-card border-0 h-100 d-flex align-items-center justify-content-center text-center p-5 border-dashed" style="border: 2px dashed var(--accent) !important; background: transparent;">
+                        <i class="bi bi-plus-circle-dotted text-primary" style="font-size: 3.5rem;"></i>
+                        <h5 class="fw-bold mt-3">Add Your First Project</h5>
+                        <p class="text-secondary small mb-4">Click below to easily add projects directly to your portfolio database.</p>
+                        <a href="{% url 'add_project' %}" class="btn btn-sm btn-primary-custom">Get Started</a>
+                    </div>
+                </div>
+            {% endif %}
+
+            {% for project in projects %}
+                <div class="col-md-6 col-lg-4 project-card-col animate-fade-in" data-category="{{ project.category }}">
+                    <div class="card glass-panel project-card border-0">
+                        <div class="project-card-img-wrapper">
+                            {% if project.image %}
+                                <img src="{{ project.image.url }}" class="project-card-img" alt="{{ project.title }}">
+                            {% else %}
+                                <div class="project-card-img bg-dark d-flex align-items-center justify-content-center">
+                                    <i class="bi bi-laptop text-muted" style="font-size: 4rem;"></i>
+                                </div>
+                            {% endif %}
+                            <span class="project-category-badge">{{ project.get_category_display }}</span>
+                        </div>
+                        <div class="card-body p-4 d-flex flex-column">
+                            <h5 class="card-title fw-bold">{{ project.title }}</h5>
+                            <p class="card-text text-secondary mb-4">{{ project.description|truncatewords:15 }}</p>
+                            <div class="mt-auto d-flex justify-content-between align-items-center">
+                                <a href="{% url 'project_detail' project.pk %}" class="btn btn-sm btn-outline-custom py-2 px-3">
+                                    View Details
+                                </a>
+                                <div class="d-flex gap-2">
+                                    {% if project.github_link %}
+                                        <a href="{{ project.github_link }}" target="_blank" class="btn btn-sm btn-light rounded-circle shadow-sm" aria-label="GitHub Link">
+                                            <i class="bi bi-github"></i>
+                                        </a>
+                                    {% endif %}
+                                    {% if project.live_demo_link %}
+                                        <a href="{{ project.live_demo_link }}" target="_blank" class="btn btn-sm btn-light rounded-circle shadow-sm text-primary" aria-label="Live Demo Link">
+                                            <i class="bi bi-box-arrow-up-right"></i>
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                {% if not request.user.is_authenticated %}
+                    <div class="col-12 text-center py-5">
+                        <div class="glass-panel p-5 d-inline-block">
+                            <i class="bi bi-clipboard-x text-muted" style="font-size: 3rem;"></i>
+                            <h4 class="fw-bold mt-3">No Projects Listed</h4>
+                            <p class="text-secondary mb-0">The developer has not added any projects yet. Please check back later!</p>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

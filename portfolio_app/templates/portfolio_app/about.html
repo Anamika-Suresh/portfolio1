@@ -1,0 +1,157 @@
+{% extends 'portfolio_app/base.html' %}
+{% load static %}
+
+{% block title %}About Me | {{ profile.name }}{% endblock %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container py-4">
+        <!-- Profile Header -->
+        <div class="row align-items-center mb-5 animate-fade-in">
+            <div class="col-lg-4 text-center mb-4 mb-lg-0">
+                <div class="profile-img-container">
+                    {% if profile.profile_image %}
+                        <img src="{{ profile.profile_image.url }}" alt="{{ profile.name }}" class="profile-img img-fluid">
+                    {% else %}
+                        <div class="profile-img d-flex align-items-center justify-content-center bg-secondary" style="width: 250px; height: 250px; border-radius: 50%;">
+                            <i class="bi bi-person-fill text-secondary" style="font-size: 8rem; color: var(--accent) !important;"></i>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-lg-8">
+                <span class="text-uppercase text-secondary fw-bold small tracking-wider">A little about me</span>
+                <h1 class="fw-bold mt-2 mb-3">About {{ profile.name }}</h1>
+                <h3 class="text-primary fw-normal mb-4">{{ profile.title }}</h3>
+                <div class="text-secondary lead mb-4">
+                    {{ profile.bio|linebreaks }}
+                </div>
+                {% if profile.location %}
+                    <p class="mb-0 text-secondary">
+                        <i class="bi bi-geo-alt-fill text-danger me-2"></i>Based in <strong>{{ profile.location }}</strong>
+                    </p>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="row g-5">
+            <!-- Skills Section -->
+            <div class="col-lg-6 animate-fade-in">
+                <div class="glass-panel p-4 p-md-5 h-100">
+                    <h3 class="fw-bold mb-4"><i class="bi bi-gear-fill text-primary me-2"></i>My Skills</h3>
+                    
+                    {% if skills_by_category %}
+                        {% for category, skills in skills_by_category.items %}
+                            <div class="mb-4">
+                                <h5 class="fw-bold text-secondary text-uppercase small tracking-wide mb-3">{{ category }}</h5>
+                                {% if skills %}
+                                    <div class="row row-cols-1 row-cols-sm-2 g-3">
+                                        {% for skill in skills %}
+                                            <div class="col">
+                                                <div class="d-flex justify-content-between mb-1">
+                                                    <span class="fw-medium">{{ skill.name }}</span>
+                                                    <span class="text-muted small">{{ skill.proficiency }}%</span>
+                                                </div>
+                                                <div class="progress progress-custom">
+                                                    <div class="progress-bar progress-bar-custom" role="progressbar" style="width: {{ skill.proficiency }}%;" aria-valuenow="{{ skill.proficiency }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    <p class="text-muted small">No skills added in this category.</p>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="text-center py-4">
+                            <p class="text-secondary">No skills registered yet. Register skills in the Admin panel to show them here!</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Resume / Timeline Section -->
+            <div class="col-lg-6 animate-fade-in">
+                <div class="glass-panel p-4 p-md-5 h-100">
+                    <h3 class="fw-bold mb-4"><i class="bi bi-journal-bookmark-fill text-primary me-2"></i>Education & Experience</h3>
+                    
+                    <div class="timeline mt-3">
+                        {% if experience_items or education_items %}
+                            {% if experience_items %}
+                                <h6 class="text-uppercase text-secondary fw-bold small tracking-wider mb-4"><i class="bi bi-briefcase me-2"></i>Experience / Internships</h6>
+                                {% for item in experience_items %}
+                                    <div class="timeline-item">
+                                        <h5 class="fw-bold mb-1">{{ item.title }}</h5>
+                                        <div class="d-flex justify-content-between align-items-center mb-2 flex-wrap gap-2">
+                                            <span class="text-primary fw-semibold">{{ item.institution }}</span>
+                                            <span class="badge bg-light text-dark border border-color">{{ item.period }}</span>
+                                        </div>
+                                        {% if item.description %}
+                                            <p class="text-secondary mb-0" style="font-size: 0.95rem;">{{ item.description|linebreaksbr }}</p>
+                                        {% endif %}
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+
+                            {% if education_items %}
+                                <h6 class="text-uppercase text-secondary fw-bold small tracking-wider mb-4 mt-5"><i class="bi bi-mortarboard me-2"></i>Education</h6>
+                                {% for item in education_items %}
+                                    <div class="timeline-item">
+                                        <h5 class="fw-bold mb-1">{{ item.title }}</h5>
+                                        <div class="d-flex justify-content-between align-items-center mb-2 flex-wrap gap-2">
+                                            <span class="text-primary fw-semibold">{{ item.institution }}</span>
+                                            <span class="badge bg-light text-dark border border-color">{{ item.period }}</span>
+                                        </div>
+                                        {% if item.description %}
+                                            <p class="text-secondary mb-0" style="font-size: 0.95rem;">{{ item.description|linebreaksbr }}</p>
+                                        {% endif %}
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                        {% else %}
+                            <p class="text-muted">No timeline details loaded yet.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Certifications Section -->
+        <div class="row mt-5 pt-3 g-4 animate-fade-in" style="animation-delay: 0.1s;">
+            <div class="col-12">
+                <div class="glass-panel p-4 p-md-5">
+                    <h3 class="fw-bold mb-4"><i class="bi bi-patch-check-fill text-primary me-2"></i>Certifications</h3>
+                    {% if certifications %}
+                        <div class="row row-cols-1 row-cols-md-3 g-4">
+                            {% for cert in certifications %}
+                                <div class="col">
+                                    <div class="card h-100 bg-secondary bg-opacity-25 border-0 p-3 shadow-sm" style="border-radius: 12px; background: rgba(var(--accent-rgb), 0.03); border: 1px solid var(--border-color) !important;">
+                                        <div class="card-body p-2 d-flex flex-column h-100">
+                                            <h5 class="card-title fw-bold text-primary mb-2" style="font-size: 1.1rem;">{{ cert.title }}</h5>
+                                            <p class="text-secondary fw-semibold small mb-2">{{ cert.authority }}</p>
+                                            <p class="text-muted small mb-3"><i class="bi bi-calendar3 me-2"></i>{{ cert.date_earned }}</p>
+                                            {% if cert.description %}
+                                                <p class="card-text text-secondary small mb-3" style="font-size: 0.88rem;">{{ cert.description }}</p>
+                                            {% endif %}
+                                            {% if cert.credential_url %}
+                                                <div class="mt-auto pt-2">
+                                                    <a href="{{ cert.credential_url }}" target="_blank" class="btn btn-outline-custom w-100 py-2 btn-sm" style="font-size: 0.82rem; border-radius: 20px;">
+                                                        <i class="bi bi-patch-check-fill me-1.5 text-primary"></i>Verify Badge
+                                                    </a>
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <p class="text-secondary mb-0">No certifications registered yet.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

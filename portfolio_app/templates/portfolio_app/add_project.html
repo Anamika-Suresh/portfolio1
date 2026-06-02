@@ -1,0 +1,103 @@
+{% extends 'portfolio_app/base.html' %}
+{% load static %}
+
+{% block title %}Add Project | Developer Portfolio{% endblock %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container py-4">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 animate-fade-in">
+                <!-- Back Button -->
+                <div class="mb-4">
+                    <a href="{% url 'projects' %}" class="btn btn-sm btn-outline-custom">
+                        <i class="bi bi-arrow-left me-2"></i>Back to Projects
+                    </a>
+                </div>
+
+                <div class="glass-panel p-4 p-md-5">
+                    <div class="d-flex align-items-center gap-3 mb-4">
+                        <div class="bg-primary bg-opacity-10 p-3 rounded-3 text-primary">
+                            <i class="bi bi-plus-circle-fill" style="font-size: 1.8rem;"></i>
+                        </div>
+                        <div>
+                            <h2 class="fw-bold mb-0">Add New Project</h2>
+                            <p class="text-secondary mb-0 small">Create a new project dynamically to display on the portfolio website.</p>
+                        </div>
+                    </div>
+
+                    <form method="post" enctype="multipart/form-data" novalidate>
+                        {% csrf_token %}
+                        
+                        <div class="row g-4">
+                            <!-- Title -->
+                            <div class="col-md-8">
+                                <label for="{{ form.title.id_for_label }}" class="form-label fw-semibold">Project Title</label>
+                                {{ form.title }}
+                                {% if form.title.errors %}
+                                    <div class="text-danger small mt-1">{% for err in form.title.errors %}{{ err }}{% endfor %}</div>
+                                {% endif %}
+                            </div>
+
+                            <!-- Category -->
+                            <div class="col-md-4">
+                                <label for="{{ form.category.id_for_label }}" class="form-label fw-semibold">Category</label>
+                                {{ form.category }}
+                                {% if form.category.errors %}
+                                    <div class="text-danger small mt-1">{% for err in form.category.errors %}{{ err }}{% endfor %}</div>
+                                {% endif %}
+                            </div>
+
+                            <!-- Description -->
+                            <div class="col-12">
+                                <label for="{{ form.description.id_for_label }}" class="form-label fw-semibold">Description</label>
+                                {{ form.description }}
+                                {% if form.description.errors %}
+                                    <div class="text-danger small mt-1">{% for err in form.description.errors %}{{ err }}{% endfor %}</div>
+                                {% endif %}
+                            </div>
+
+                            <!-- Image Upload -->
+                            <div class="col-12">
+                                <label for="{{ form.image.id_for_label }}" class="form-label fw-semibold">Project Cover Image</label>
+                                {{ form.image }}
+                                <div class="form-text text-muted">Recommend an aspect ratio of 16:9 for the best visualization.</div>
+                                {% if form.image.errors %}
+                                    <div class="text-danger small mt-1">{% for err in form.image.errors %}{{ err }}{% endfor %}</div>
+                                {% endif %}
+                            </div>
+
+                            <!-- GitHub Link -->
+                            <div class="col-md-6">
+                                <label for="{{ form.github_link.id_for_label }}" class="form-label fw-semibold">GitHub Repository Link</label>
+                                {{ form.github_link }}
+                                {% if form.github_link.errors %}
+                                    <div class="text-danger small mt-1">{% for err in form.github_link.errors %}{{ err }}{% endfor %}</div>
+                                {% endif %}
+                            </div>
+
+                            <!-- Live Demo Link -->
+                            <div class="col-md-6">
+                                <label for="{{ form.live_demo_link.id_for_label }}" class="form-label fw-semibold">Live Demo Link</label>
+                                {{ form.live_demo_link }}
+                                {% if form.live_demo_link.errors %}
+                                    <div class="text-danger small mt-1">{% for err in form.live_demo_link.errors %}{{ err }}{% endfor %}</div>
+                                {% endif %}
+                            </div>
+
+                            <!-- Submit -->
+                            <div class="col-12 mt-5">
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-primary-custom py-3">
+                                        <i class="bi bi-save-fill me-2"></i>Publish Project
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
