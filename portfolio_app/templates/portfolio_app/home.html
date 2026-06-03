@@ -48,7 +48,7 @@
             <div class="col-lg-5 text-center animate-fade-in">
                 <div class="profile-img-container">
                     {% if profile.profile_image %}
-                        <img src="{{ profile.profile_image.url }}" alt="{{ profile.name }}" class="profile-img img-fluid">
+                        <img src="{{ profile.profile_image.url }}?v=1.1" alt="{{ profile.name }}" class="profile-img img-fluid">
                     {% else %}
                         <!-- Inline SVG Placeholder Avatar with beautiful styling -->
                         <div class="profile-img d-flex align-items-center justify-content-center bg-secondary" style="width: 250px; height: 250px; border-radius: 50%;">
@@ -83,7 +83,7 @@
                         <div class="card glass-panel project-card border-0">
                             <div class="project-card-img-wrapper">
                                 {% if project.image %}
-                                    <img src="{{ project.image.url }}" class="project-card-img" alt="{{ project.title }}">
+                                    <img src="{{ project.image.url }}?v=1.1" class="project-card-img" alt="{{ project.title }}">
                                 {% else %}
                                     <!-- Fallback Project SVG -->
                                     <div class="project-card-img bg-dark d-flex align-items-center justify-content-center">
