@@ -54,7 +54,7 @@
                     <div class="card glass-panel project-card border-0">
                         <div class="project-card-img-wrapper">
                             {% if project.image %}
-                                <img src="{{ project.image.url }}?v=1.1" class="project-card-img" alt="{{ project.title }}">
+                                <img src="{{ request.scheme }}://{{ request.get_host }}{{ project.image.url }}?v=1.1" class="project-card-img" alt="{{ project.title }}">
                             {% else %}
                                 <div class="project-card-img bg-dark d-flex align-items-center justify-content-center">
                                     <i class="bi bi-laptop text-muted" style="font-size: 4rem;"></i>
