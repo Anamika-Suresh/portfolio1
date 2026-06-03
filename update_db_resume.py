@@ -11,6 +11,19 @@ from portfolio_app.models import Profile, Skill, Project, Certification, Timelin
 def update_db():
     print("Starting database update with resume data...")
 
+    # Create Superuser if not exists
+    if not User.objects.filter(username='admin').exists():
+        print("Creating superuser 'admin'...")
+        User.objects.create_superuser('admin', 'admin@example.com', 'adminpassword')
+        print("Superuser created successfully! (User: admin, Pass: adminpassword)")
+    else:
+        print("Superuser 'admin' already exists. Resetting password to 'adminpassword'...")
+        admin_user = User.objects.get(username='admin')
+        admin_user.set_password('adminpassword')
+        admin_user.is_superuser = True
+        admin_user.is_staff = True
+        admin_user.save()
+
     # Clear previous seed data (except contacts and admin user)
     print("Clearing previous database contents...")
     Profile.objects.all().delete()
