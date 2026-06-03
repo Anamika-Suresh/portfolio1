@@ -50,7 +50,7 @@ def update_db():
         profile_image='profile_images/profile_pic.jpg',
         location="Calicut, India",
         github_url="https://github.com/Anamika-Suresh",
-        linkedin_url="https://linkedin.com/in/anamika-suresh-it"
+        linkedin_url="https://www.linkedin.com/in/anamika-suresh-it"
     )
 
     # 2. Create Skills

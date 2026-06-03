@@ -53,15 +53,16 @@
                             <h5 class="fw-bold mb-3"><i class="bi bi-share-fill text-primary me-2"></i>Social Profiles</h5>
                             <p class="text-secondary mb-4">Connect with me on social platforms where I actively share my tech journey.</p>
                             <div class="d-flex justify-content-start gap-2">
-                                <a href="https://github.com" target="_blank" class="social-link m-0" aria-label="GitHub">
-                                    <i class="bi bi-github"></i>
-                                </a>
-                                <a href="https://linkedin.com" target="_blank" class="social-link m-0" aria-label="LinkedIn">
-                                    <i class="bi bi-linkedin"></i>
-                                </a>
-                                <a href="https://twitter.com" target="_blank" class="social-link m-0" aria-label="Twitter">
-                                    <i class="bi bi-twitter"></i>
-                                </a>
+                                {% if global_profile.github_url %}
+                                    <a href="{{ global_profile.github_url }}" target="_blank" class="social-link m-0" aria-label="GitHub">
+                                        <i class="bi bi-github"></i>
+                                    </a>
+                                {% endif %}
+                                {% if global_profile.linkedin_url %}
+                                    <a href="{{ global_profile.linkedin_url }}" target="_blank" class="social-link m-0" aria-label="LinkedIn">
+                                        <i class="bi bi-linkedin"></i>
+                                    </a>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
