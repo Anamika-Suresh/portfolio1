@@ -1,4 +1,4 @@
-import os
+import os, time
 import django
 
 # Setup django environment
@@ -270,6 +270,26 @@ def update_db():
             'category': 'Forecasting'
         },
         {
+            'title': 'Mafia Streets - Underworld Syndicate RPG',
+            'description': (
+                "Rebranded and enhanced from Mumbai Mafia. Built with Apache Cordova + Ext JS classic theme, "
+                "this mobile-first RPG steps into the criminal underworld with custom UI aesthetics, HTML5-synthesized "
+                "retro audio via Web Audio API, and full RPG progression.\n\n"
+                "Implemented key features including a letter-by-letter CSS-animated neon logo, interactive "
+                "character selection cards with 3D tilt hover perspective space, passive breathing floats, "
+                "and rubber-band dragging with physical snap-back transitions.\n\n"
+                "Designed gameplay mechanics for two unique character classes (Maya and Vikra) with custom stats and "
+                "cooldown abilities, random Corrupt Cop (Inspector Shinde) street mini-boss encounters, and "
+                "a dynamic horizontal news gossip ticker footer. Configured Gradle build systems and JDK "
+                "requirements to successfully compile and package the clean Cordova source archive into a "
+                "native Android APK."
+            ),
+            'image': 'project_images/mafia_streets.jpg',
+            'github_link': 'https://github.com/Anamika-Suresh/Mafia-streets-gaming-app',
+            'live_demo_link': 'http://mafia-streets-mumbai.surge.sh',
+            'category': 'Game Dev'
+        },
+        {
             'title': 'Loan Default Risk Prediction',
             'description': (
                 "Trained a Random Forest classification model on financial data achieving 89% accuracy "
@@ -301,6 +321,7 @@ def update_db():
     ]
     for proj in projects_data:
         Project.objects.create(**proj)
+        time.sleep(0.05)
     print(f"Created {len(projects_data)} projects.")
     
     print("Database seeding completed with resume details!")
