@@ -330,7 +330,7 @@ def update_db():
                 "Integrated their outputs to reduce dominant class bias, achieving a final model that correctly identifies real job postings 99.01% of the time and fake job postings 73.5% of the time."
             ),
             'image': 'project_images/fake_job_detector.png',
-            'github_link': 'https://github.com/Anamika-Suresh/Fake-Job-Posting-Prediction',
+            'github_link': 'https://github.com/Anamika-Suresh/Fake-Job-Prediction',
             'live_demo_link': '',
             'category': 'Data Science'
         }
