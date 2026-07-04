@@ -317,6 +317,22 @@ def update_db():
             'github_link': 'https://github.com/Anamika-Suresh/AI-Career-Mentor',
             'live_demo_link': 'https://ai-career-mentor-5vsbprjw8pfaj9r4ubc52q.streamlit.app/',
             'category': 'AI/NLP'
+        },
+        {
+            'title': 'Fake Job Posting Prediction',
+            'description': (
+                "Built an end-to-end binary classifier utilizing Natural Language Processing (NLP) to detect fraudulent "
+                "job postings from a Kaggle dataset containing 17,880 observations and 18 features.\n\n"
+                "Implemented text preprocessing pipelines including tokenization, stopword removal, lowercase normalization, "
+                "and lemmatization, transforming text data into a term-frequency matrix for modeling. "
+                "Combined features like telecommuting flags, character/word counts, and a consolidated text representation (title, description, requirements, etc.).\n\n"
+                "Developed and compared two models—Naive Bayes (Baseline: 0.971 Accuracy, 0.81 F1-score) and an SGD Classifier—trained separately on text and numeric features. "
+                "Integrated their outputs to reduce dominant class bias, achieving a final model that correctly identifies real job postings 99.01% of the time and fake job postings 73.5% of the time."
+            ),
+            'image': 'project_images/fake_job_detector.png',
+            'github_link': 'https://github.com/Anamika-Suresh/Fake-Job-Posting-Prediction',
+            'live_demo_link': '',
+            'category': 'Data Science'
         }
     ]
     for proj in projects_data:
