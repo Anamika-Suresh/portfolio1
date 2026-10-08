@@ -7,7 +7,16 @@ from django.core.mail import send_mail
 from .models import Profile, Skill, Project, Contact, Certification, TimelineItem
 from .forms import ContactForm, ProjectForm
 
+def ensure_db_updated():
+    try:
+        if not Project.objects.filter(title='WhatsApp AI Chatbot').exists():
+            import update_db_resume
+            update_db_resume.update_db()
+    except Exception as e:
+        print(f"Auto db update error: {e}")
+
 def home_view(request):
+    ensure_db_updated()
     profile = Profile.objects.first()
     if not profile:
         profile = Profile(
@@ -20,6 +29,7 @@ def home_view(request):
     return render(request, 'portfolio_app/home.html', {'profile': profile, 'projects': projects})
 
 def about_view(request):
+    ensure_db_updated()
     profile = Profile.objects.first()
     if not profile:
         profile = Profile(
@@ -48,6 +58,7 @@ def about_view(request):
     })
 
 def projects_view(request):
+    ensure_db_updated()
     projects = Project.objects.all().order_by('-created_at')
     # Fetch unique categories of projects currently in the database to show filter pills
     categories = Project.objects.values_list('category', flat=True).distinct()
