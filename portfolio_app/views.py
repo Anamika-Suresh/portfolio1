@@ -9,11 +9,52 @@ from .forms import ContactForm, ProjectForm
 
 def ensure_db_updated():
     try:
-        if not Project.objects.filter(title='WhatsApp AI Chatbot').exists():
-            import update_db_resume
-            update_db_resume.update_db()
+        if not Project.objects.filter(title='AI Agent using LangChain').exists():
+            Project.objects.get_or_create(
+                title='WhatsApp AI Chatbot',
+                defaults={
+                    'description': (
+                        "Developed an intelligent WhatsApp AI Chatbot integrating natural language processing and automated messaging capabilities for real-time conversational responses.\n\n"
+                        "Built modular backend workflows utilizing Python API integrations, processing user inquiries dynamically and delivering context-aware automated solutions.\n\n"
+                        "Designed end-to-end conversation flows with robust error handling, webhook management, and scalable API architecture for seamless messaging interaction."
+                    ),
+                    'image': 'project_images/whatsapp_chatbot.jpg',
+                    'github_link': 'https://github.com/Anamika-Suresh/whatsapp-chatbot',
+                    'live_demo_link': '',
+                    'category': 'AI/NLP'
+                }
+            )
+            Project.objects.get_or_create(
+                title='AI Agent using LangChain',
+                defaults={
+                    'description': (
+                        "Architected an autonomous AI Agent framework powered by LangChain, enabling LLM-driven reasoning, multi-step problem solving, and tool execution.\n\n"
+                        "Implemented agentic workflows with custom tool integration, vector store memory retrieval, and dynamic prompt orchestration to resolve complex user queries.\n\n"
+                        "Leveraged Python, LangChain, and state-of-the-art LLMs to create structured agent memory pipelines and automated task execution graphs."
+                    ),
+                    'image': 'project_images/ai_agent_langchain.jpg',
+                    'github_link': 'https://github.com/Anamika-Suresh/AI-Agent-Langchain',
+                    'live_demo_link': '',
+                    'category': 'AI/NLP'
+                }
+            )
+        
+        if not TimelineItem.objects.filter(title='AI/ML Intern', institution='Ladder7 Nextstep Solutions LLP').exists():
+            TimelineItem.objects.create(
+                title="AI/ML Intern",
+                institution="Ladder7 Nextstep Solutions LLP",
+                period="Sep 2026 - Present",
+                item_type="Experience",
+                order=1,
+                description=(
+                    "• Started an AI/ML internship focused on developing and experimenting with machine learning solutions, "
+                    "data preprocessing, model development, and AI-based applications.\n"
+                    "• Working with Python, Pandas, NumPy, Scikit-learn, TensorFlow, and PyTorch while collaborating with the R&D "
+                    "team on practical AI/ML projects and technical problem-solving."
+                )
+            )
     except Exception as e:
-        print(f"Auto db update error: {e}")
+        print(f"Auto-sync error: {e}")
 
 def home_view(request):
     ensure_db_updated()
