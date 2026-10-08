@@ -1,9 +1,12 @@
 import os, time
 import django
 
-# Setup django environment
+# Setup django environment if not already loaded
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'portfolio_project.settings')
-django.setup()
+try:
+    django.setup()
+except Exception:
+    pass
 
 from django.contrib.auth.models import User
 from portfolio_app.models import Profile, Skill, Project, Certification, TimelineItem
